@@ -1,9 +1,38 @@
 import sys
 
 
+# In-memory list to hold tasks
+tasks = []
+
+
+def get_next_id():
+	"""Return the next available integer id for a new task."""
+	return max((t['id'] for t in tasks), default=0) + 1
+
+
 def add_task():
-	"""Placeholder: Add a new task"""
-	pass
+	"""Prompt the user to enter a new task and append it to `tasks`.
+
+	Each task is a dict with keys: id, title, description, due_date, completed
+	"""
+	print("\n-- เพิ่มงานใหม่ --")
+	title = input("ชื่อเรื่อง: ").strip()
+	if not title:
+		print("ชื่อเรื่องห้ามว่าง")
+		return
+	description = input("รายละเอียด: ").strip()
+	due_date = input("วันครบกำหนด (ตัวอย่าง: 2025-10-31): ").strip()
+
+	task = {
+		"id": get_next_id(),
+		"title": title,
+		"description": description,
+		"due_date": due_date,
+		"completed": False,
+	}
+
+	tasks.append(task)
+	print(f"เพิ่มงานเรียบร้อย (id={task['id']})")
 
 
 def view_tasks():
